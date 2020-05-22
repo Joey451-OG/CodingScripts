@@ -1,0 +1,44 @@
+
+using UnityEngine;
+
+//Note: Make sure to change your MonoBehaviour to whatever you name your script
+public class Movement2D : MonoBehaviour
+{   //An ajustable number that we can change in the unity higharchy.
+    public float moveSpeed = 2f;
+
+    //An ajustable number that we can change in the unity higharchy.
+    public float jumpForce = 6f;
+    
+    //An ajustable number that we can change in the unity higharchy.
+    public float velocity = 0.0001f;
+
+    //Gets the Rigidbody2D of the object attached and names it so we can reference it later
+    private Rigidbody2D rg2D;
+
+    // Start is called before the first frame update
+    private void Start()
+    {
+        //Makes our Rigidbody usable
+        rg2D = GetComponent<Rigidbody2D>();
+    }
+
+    // Update is called once per frame
+    private void Update()
+    {   //Gets the Input of the L/R , A/D keys and puts it into a varible that we can use later.
+        var movementHor = Input.GetAxis("Horizontal");
+
+        /*Takes the position of the object, starts to move it in 3 Vectors, muiltiplies it by Time.deltaTime to smooth
+        it out, and multiplies it by moveSpeed. NOTE: if any one of these varbile is equal to 0 the object does not move.*/
+        transform.position += new Vector3(movementHor, 0, 0) * Time.deltaTime * moveSpeed;
+
+        /*If the jump key is pressed and the objects velocity is less than velocity - then take our Rigidbody2d and add a
+        force along a Vector 2 with no movement on the x axis and some movement on the y axis as defended by jumpForce also
+        make sure that this force is an Impluse so that it happends all at once rather that gradlely over time.*/
+        if (Input.GetButtonDown("Jump") && Mathf.Abs(rg2D.velocity.y) < velocity)
+        {
+            rg2D.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+        }
+    }
+}
+
+/*To set up script - Go to: https://www.youtube.com/watch?v=n4N9VEA2GFo */

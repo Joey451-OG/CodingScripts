@@ -1,0 +1,93 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+//Note: make sure to change the Monobehavior to whatevery you name your script
+public class cameraController : MonoBehaviour
+{
+    //A string that we can edit in the inspector
+    public string mouseXinputname, mouseYinputname;
+
+    //A float that we can edit in the inspector
+    public float mouseSensitivity;
+
+    //A float that we have to hard code
+    private float Xaxisclamp;
+
+    //The transform of an object
+    [SerializeField] private Transform playerBody;
+
+    private void Awake()
+    {   
+        //On awake call in the LockCursor function
+        LockCursor();
+
+        //On awake set Xaxisclamp to 0.00f
+        Xaxisclamp = 0.00f;
+    }
+    private void LockCursor ()
+    {   
+        //Locks the cursor in the game window
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    private void Update()
+    {   
+        //Every frame call in the CameraRotation funtction
+        CameraRotaion();
+    }
+
+    private void CameraRotaion ()
+    {   
+        /*Get the axis from mouseXinputname , multiply it by mouseSensitivity , multiply it by Time.deltatime to smooth it out 
+         then store all of that into the float mouseX*/
+        float mouseX = Input.GetAxis(mouseXinputname) * mouseSensitivity * Time.deltaTime;
+
+        /*Get the axis from mouseYinputname , multiply it by mouseSensitivity , multiply it by Time.deltatime to smooth it out 
+         then store all of that into the float mouseY*/
+        float mouseY = Input.GetAxis(mouseYinputname) * mouseSensitivity * Time.deltaTime;
+
+        //Rotate the camera up/down on the left Vector times mouseY
+        transform.Rotate(Vector3.left * mouseY);
+
+        //Rotate the playerBody transform Clockwize/Counter-Clockwix on the up Vector times mouseX
+        playerBody.Rotate(Vector3.up * mouseX);
+
+        //Store mouseY ouput into Xaxisclamp
+        Xaxisclamp += mouseY;
+
+        //If Xaxisclamp is more than 90.0f then set Xaxisclamp to 90.0f , mouseY to 0.0f , and the float vaule to 270.0f
+        if(Xaxisclamp > 90.0f)
+        {
+            Xaxisclamp = 90.0f;
+
+            mouseY = 0.0f;
+
+            ClampXaxisRotationToValue(270.0f);
+        }
+
+        //If Xaxisclamp is less than -90.0f then set Xaxisclamp to -90.0f , mouseY to 0.0f , and the float vaule to 90.0f
+        else if (Xaxisclamp < -90.0f)
+        {
+            Xaxisclamp = -90.0f;
+
+            mouseY = 0.0f;
+
+            ClampXaxisRotationToValue(90.0f);
+        }
+    }
+
+    private void ClampXaxisRotationToValue(float value)
+    {
+        //Set the camera's euler angles into a Vector3 called eulerRotation
+        Vector3 eulerRotation = transform.eulerAngles;
+
+        //Set the eulerRoation of the x vaule to the float value
+        eulerRotation.x = value;
+
+        //Set the camera's eulerangles to equal eularRotaion
+        transform.eulerAngles = eulerRotation;
+    }
+}
+/*To set up script - Go to: https://www.youtube.com/watch?v=n-KX8AeGK7E&t=1055s */
+
