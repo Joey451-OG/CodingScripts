@@ -33,6 +33,18 @@ public class characterController : MonoBehaviour
 
     //A float that we can edit in the inspector
     public float sprint = 20f;
+    
+    //A float that we can edit in the inspector
+    public float crouchHeight = 1.0f;
+
+    //A float that we can edit in the inspector
+    public float crouchSpeed = 5f;
+
+    private void Start()
+    {   
+        //Allows character to use the CharacterController
+        character.GetComponent<CharacterController>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -56,6 +68,22 @@ public class characterController : MonoBehaviour
        //If the sprint key is released then set the speed back down to 10f
        if (Input.GetButtonUp("Sprint"))
         {
+            speed = 10f;
+        }
+
+       //If the crouch key is pressed then set the character height to be equal to crouchHeight and set the speed to equal crouchSpeed
+       if (Input.GetButtonDown("Crouch"))
+        {
+            character.height = crouchHeight;
+
+            speed = crouchSpeed;
+        }
+
+        //If the crouch key is pressed then set the character height to be equal to 2f and set the speed to equal 10
+        if (Input.GetButtonUp("Crouch")) 
+        {
+            character.height = 2f;
+
             speed = 10f;
         }
 
