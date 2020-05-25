@@ -7,7 +7,7 @@ public class Movement2D : MonoBehaviour
 
     //An ajustable number that we can change in the unity higharchy.
     public float jumpForce = 6f;
-    
+
     //An ajustable number that we can change in the unity higharchy.
     public float velocity = 0.0001f;
 
@@ -23,13 +23,13 @@ public class Movement2D : MonoBehaviour
 
     // Update is called once per frame
     private void Update()
-    {   
+    {
         //IF the Sprint key is pressed then set the moveSpeed to 4
         if (Input.GetButtonDown("Sprint"))
         {
             moveSpeed = 4f;
         }
-        
+
         //If the sprint key is released then set the moveSpeed to 2
         if (Input.GetButtonUp("Sprint"))
         {
@@ -51,6 +51,7 @@ public class Movement2D : MonoBehaviour
             rg2D.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
         }
     }
+}
 
 
     /*To set up script - Go to: https://www.youtube.com/watch?v=n4N9VEA2GFo */
