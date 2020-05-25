@@ -13,6 +13,9 @@ public class Movement2D : MonoBehaviour
 
     //Gets the Rigidbody2D of the object attached and names it so we can reference it later
     private Rigidbody2D rg2D;
+    
+    //By defualt faceRight is equal to true
+    bool faceRight = true;
 
     // Start is called before the first frame update
     private void Start()
@@ -50,6 +53,25 @@ public class Movement2D : MonoBehaviour
         {
             rg2D.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
         }
+
+        //if movementHor is less than 0 and faceRight is true the call the flip function
+        if (movementHor < 0 && faceRight)
+        {
+            flip();
+        }
+        //if movementHor is more than 0 and faceRight is false then call the fip function
+        else if (movementHor > 0 && !faceRight)
+        {
+            flip();
+        }
+    }
+
+    void flip()
+    {   //Set faceRight to the oppisite of the current answer ( so if faceRight is true then set it to false and vise versa ) 
+        faceRight = !faceRight;
+
+        //Rotate the oject 180 degrees
+        transform.Rotate(0, 180, 0);
     }
 }
 
