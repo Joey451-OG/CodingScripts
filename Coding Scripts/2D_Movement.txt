@@ -1,7 +1,6 @@
 
 using UnityEngine;
 
-//Note: Make sure to change your MonoBehaviour to whatever you name your script
 public class Movement2D : MonoBehaviour
 {   //An ajustable number that we can change in the unity higharchy.
     public float moveSpeed = 2f;
@@ -24,7 +23,20 @@ public class Movement2D : MonoBehaviour
 
     // Update is called once per frame
     private void Update()
-    {   //Gets the Input of the L/R , A/D keys and puts it into a varible that we can use later.
+    {   
+        //IF the Sprint key is pressed then set the moveSpeed to 4
+        if (Input.GetButtonDown("Sprint"))
+        {
+            moveSpeed = 4f;
+        }
+        
+        //If the sprint key is released then set the moveSpeed to 2
+        if (Input.GetButtonUp("Sprint"))
+        {
+            moveSpeed = 2f;
+        }
+
+        //Gets the Input of the L/R , A/D keys and puts it into a varible that we can use later.
         var movementHor = Input.GetAxis("Horizontal");
 
         /*Takes the position of the object, starts to move it in 3 Vectors, muiltiplies it by Time.deltaTime to smooth
@@ -39,6 +51,6 @@ public class Movement2D : MonoBehaviour
             rg2D.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
         }
     }
-}
 
-/*To set up script - Go to: https://www.youtube.com/watch?v=n4N9VEA2GFo */
+
+    /*To set up script - Go to: https://www.youtube.com/watch?v=n4N9VEA2GFo */
